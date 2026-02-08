@@ -28,11 +28,12 @@
     }
     h1{ margin:6px 0 10px; font-size:clamp(26px,4vw,42px); }
     .type{ font-size:clamp(18px,2.6vw,22px); line-height:1.7; min-height:170px; margin:18px 0 14px; white-space:pre-wrap; }
-
-    #memoryPic, #memoryVideo{
+    #memoryPic{
       display:none; width:min(320px,80vw); margin:10px auto 14px; border-radius:16px;
       box-shadow:0 12px 30px rgba(0,0,0,.35);
     }
+    .timeline{ margin:8px auto 12px; max-width:520px; text-align:left; opacity:.9; }
+    .timeline ul{ margin:6px 0 0 18px; line-height:1.6; }
 
     .btn-wrap{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:8px; }
     .btn{
@@ -42,9 +43,22 @@
       box-shadow:0 14px 34px rgba(255,77,125,.55), inset 0 -2px 0 rgba(0,0,0,.15);
       transition:transform .08s ease, box-shadow .12s ease;
     }
+    .btn:hover{ transform:translateY(-1px) scale(1.05); box-shadow:0 18px 44px rgba(255,77,125,.7); }
     .btn.no{ background:linear-gradient(135deg,#444,#666); }
 
     .final{ display:none; margin-top:16px; font-size:clamp(22px,3.2vw,34px); font-weight:900; }
+    #afterYesGif{ display:none; width:min(220px,70vw); margin:10px auto 6px; border-radius:16px; }
+
+    #themeToggle{
+      display:inline-block; position:absolute; top:12px; right:12px;
+      padding:8px 14px; border-radius:999px; border:none; cursor:pointer; font-weight:800;
+      background:rgba(255,255,255,.15); color:#fff;
+    }
+
+    #easterWrap{ margin-top:12px; }
+    #easterMsg{ display:none; margin-top:6px; font-weight:700; }
+
+    #reactions{ display:none; gap:8px; justify-content:center; margin-top:8px; }
   </style>
 </head>
 
@@ -52,28 +66,43 @@
   <div class="hearts" id="hearts"></div>
 
   <main class="card">
-    <h1>Innayat… aka my Nayuu 💗</h1>
+    <button id="themeToggle">🌙 Night</button>
+    <h1>Innayat… aka My Nayuu 💗</h1>
+
     <div class="type" id="type"></div>
 
-    <!-- Change image name here -->
-    <img id="memoryPic" src="innayat.jpg" alt="Our memory" />
+    <img id="memoryPic" src="memory.jpg" alt="Innayat" />
 
-    <!-- Video (optional) -->
-    <video id="memoryVideo" playsinline muted loop>
-      <source src="memory.mp4" type="video/mp4" />
-    </video>
+    <div class="timeline">
+      <strong>Our tiny timeline 💫</strong>
+      <ul>
+        <li>We crossed paths ✨</li>
+        <li>Random talks → real talks 💬</li>
+        <li>Laughing at the same dumb things 🎀</li>
+        <li>Getting a little closer every day 🌙</li>
+        <li>This moment 💗</li>
+      </ul>
+    </div>
 
     <div class="btn-wrap">
-      <button class="btn" id="yesBtn">Yes, I’m yours 🎀💗</button>
+      <button class="btn" id="yesBtn">Yes, I’m yours 💖</button>
       <button class="btn no" id="noBtn">No 🙄</button>
-      <a class="btn" id="songBtn" href="https://open.spotify.com/search/Blue%20yung%20kai" target="_blank" rel="noopener">Play our song 🫶🏻</a>
+      <a class="btn" id="songBtn" href="https://open.spotify.com/search/Blue%20yung%20kai" target="_blank" rel="noopener">Play our song 💙</a>
+    </div>
+
+    <div id="reactions">
+      <button class="btn" id="awwBtn">🎀 Aww</button>
+      <button class="btn" id="cuteBtn">🥺 Cute</button>
+      <button class="btn" id="heheBtn">😌 I knew it</button>
     </div>
 
     <div class="final" id="final">I KNEW IT 😌🎀 You’re my Valentine, Nayuu 💗</div>
+    <img id="afterYesGif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute love GIF" />
 
-    <div id="easterWrap" style="margin-top:12px; cursor:pointer;">
-      <span id="easterHeart">💖</span> <small>Tap me 3 times</small>
-      <div id="easterMsg" style="display:none;">I’m really glad it’s you, Nayuu 💗</div>
+    <div id="easterWrap">
+      <button id="easterHeart" style="font-size:22px; background:transparent; border:none; cursor:pointer;">💖</button>
+      <small>Tap me 3 times</small>
+      <div id="easterMsg">I’m really glad it’s you, Nayuu 💗</div>
     </div>
   </main>
 
@@ -85,15 +114,20 @@ you became really special to me, Innayat.
 I call you Nayuu because it feels like something
 that’s just mine for you.
 
-So… Will you be my Valentine, Nayuu? 💗`;
+You make my normal days brighter,
+and my bad days lighter.
+
+So… will you be my Valentine, Nayuu? 💗`;
 
     const typeBox = document.getElementById("type");
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const final = document.getElementById("final");
+    const gif = document.getElementById("afterYesGif");
     const hearts = document.getElementById("hearts");
+    const songBtn = document.getElementById("songBtn");
+    const reactions = document.getElementById("reactions");
     const memoryPic = document.getElementById("memoryPic");
-    const memoryVideo = document.getElementById("memoryVideo");
 
     let i = 0;
     function typeWriter(){
@@ -104,8 +138,6 @@ So… Will you be my Valentine, Nayuu? 💗`;
         yesBtn.style.display = "inline-block";
         noBtn.style.display = "inline-block";
         memoryPic.style.display = "block";
-        memoryVideo.style.display = "block";
-        memoryVideo.play().catch(()=>{});
       }
     }
     typeWriter();
@@ -121,8 +153,15 @@ So… Will you be my Valentine, Nayuu? 💗`;
 
     yesBtn.addEventListener("click", ()=>{
       final.style.display = "block";
-      confetti({ particleCount: 200, spread: 140, startVelocity: 45, origin:{ y:0.6 } });
+      gif.style.display = "block";
+      songBtn.style.display = "inline-block";
+      reactions.style.display = "flex";
+      confetti({ particleCount: 220, spread: 140, startVelocity: 45, origin:{ y:0.6 } });
     });
+
+    document.getElementById("awwBtn").onclick = ()=> confetti({ particleCount:60, spread:60 });
+    document.getElementById("cuteBtn").onclick = ()=> confetti({ particleCount:60, spread:90 });
+    document.getElementById("heheBtn").onclick = ()=> confetti({ particleCount:60, spread:40 });
 
     function spawnHearts(){
       const h = document.createElement("div");
@@ -132,7 +171,7 @@ So… Will you be my Valentine, Nayuu? 💗`;
       hearts.appendChild(h);
       setTimeout(()=>h.remove(), 7000);
     }
-    setInterval(spawnHearts, 700);
+    setInterval(spawnHearts, 600);
 
     let taps = 0;
     const easterHeart = document.getElementById("easterHeart");
@@ -146,6 +185,15 @@ So… Will you be my Valentine, Nayuu? 💗`;
     }
     easterHeart.addEventListener("click", handleEasterTap);
     easterHeart.addEventListener("touchstart", handleEasterTap);
+
+    const toggle = document.getElementById("themeToggle");
+    let soft = false;
+    toggle.addEventListener("click", ()=>{
+      soft = !soft;
+      document.documentElement.style.setProperty("--bg1", soft ? "#2b0a1f" : "#120018");
+      document.documentElement.style.setProperty("--bg2", soft ? "#ff9ab5" : "#2a0033");
+      toggle.textContent = soft ? "☀️ Soft" : "🌙 Night";
+    });
   </script>
 </body>
 </html>
